@@ -30,10 +30,16 @@ export class Termek {
         <button id="v-${this.#id}">Kosárba</button>
       </div>
     `;
-    this.#szuloElem.innerHTML += termekHTML;
+    this.#szuloElem.insertAdjacentHTML("beforeend", termekHTML); 
+
+    const gomb = document.querySelector(`#v-${this.#id}`);
+    gomb.addEventListener("click", () => {
+      this.esemeny("kosarba", this.#id);
+    });
   }
 
   esemeny(nev, id) {
-    //CustomEvent helye
+    const esemenyem = new CustomEvent(nev, { detail: id });
+    window.dispatchEvent(esemenyem);
   }
 }

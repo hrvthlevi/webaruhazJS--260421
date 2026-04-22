@@ -13,6 +13,11 @@ export class Webshop {
     init() {
         this.#termekek = new Termekek(TERMEK_LISTA, this.szuloElem);
         this.esemenyFigyeles();
+
+        window.addEventListener("kosarba", (event)=> {
+            const termekId = event.detail;
+            console.log("Termék hozzáadva a kosárhoz, ID:", termekId)
+        })
     }
   esemenyFigyeles() {
     const gombok = document.querySelectorAll("nav button");
