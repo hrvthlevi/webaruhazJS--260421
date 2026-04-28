@@ -6,7 +6,34 @@ export class Kosar {
 
     constructor(szuloElem) {
         this.#szuloElem = szuloElem;
-        this.#lista = [];
+        this.#esemenyFigyeles();
+    }
+
+    #esemenyFigyeles() {
+        window.addEventListener("novelEsemeny", (event) => {
+            const id = event.detail;
+            const elem = this.#lista.find(el => el.getTermekId() === id);
+            if (elem) {
+                elem.novel();
+                this.megjelenit();
+            }
+        });
+
+        window.addEventListener("csokkenEsemeny", (event) => {
+            const id = event.detail;
+            const elem = this.#lista.find(el => el.getTermekId() === id);
+            if (elem) {
+                elem.csokken();
+                this.megjelenit();
+            }
+        });
+
+        window.addEventListener("torlesEsemeny", (event) => {
+            const id = event.detail;
+            // Kiszűrjük a törlendő elemet a listából
+            this.#lista = this.#lista.filter(el => el.getTermekId() !== id);
+            this.megjelenit();
+        });
     }
 
     hozzaad(termekAdat) {

@@ -1,7 +1,7 @@
 import { TERMEK_LISTA } from "./adatok.js";
 import { Termekek } from "./Termekek.js";
 import { Kosar } from "./Kosar.js";
-import {AdminTermekek} from "./admin/AdminTermekek.js"
+import { AdminTermekek } from "./admin/AdminTermekek.js";
 
 export class Webshop {
   #termekek;
