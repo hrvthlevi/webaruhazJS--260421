@@ -1,6 +1,7 @@
 import { TERMEK_LISTA } from "./adatok.js";
 import { Termekek } from "./Termekek.js";
 import { Kosar } from "./Kosar.js";
+import {AdminTermekek} from "./admin/AdminTermekek.js"
 
 export class Webshop {
   #termekek;
@@ -23,6 +24,7 @@ export class Webshop {
       this.#kosar.hozzaad(kivalasztott);
     });
   }
+
   esemenyFigyeles() {
     const gombok = document.querySelectorAll("nav button");
     gombok.forEach((gomb) => {
@@ -35,14 +37,12 @@ export class Webshop {
 
   nezetValtas(tipus) {
     this.szuloElem.innerHTML = "";
-
     if (tipus === "shop") {
       this.#termekek.megjelenit();
     } else if (tipus === "kosar") {
       this.#kosar.megjelenit();
     } else if (tipus === "admin") {
-      this.szuloElem.innerHTML =
-        "<h2>Admin felület</h2><p>Itt lehetne szerkeszteni a könyveket.</p>";
+      new AdminTermekek(TERMEK_LISTA, this.szuloElem);
     }
   }
 }
