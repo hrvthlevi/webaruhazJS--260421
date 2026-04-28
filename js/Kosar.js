@@ -1,24 +1,48 @@
+import { KosarElem } from "./KosarElem.js";
+
 export class Kosar {
-    #lista = []; 
+    #lista = [];
     #szuloElem;
 
     constructor(szuloElem) {
         this.#szuloElem = szuloElem;
-        this.#lista = []; 
+        this.#lista = [];
     }
-    hozzaad(termek) {
-        this.#lista.push(termek);
-        console.log("Kosárban van:", this.#lista);
+
+    hozzaad(termekAdat) {
+        const letezoElem = this.#lista.find(elem => elem.getTermekId() === termekAdat.id);
+
+        if (letezoElem) {
+            letezoElem.novel();
+        } else {
+            const ujElem = new KosarElem(termekAdat, this.#szuloElem);
+            this.#lista.push(ujElem);
+        }
     }
+
     megjelenit() {
-        this.#szuloElem.innerHTML = "<h2>Kosár tartalma</h2>";
-        this.#lista.forEach(termek => {
-            this.#szuloElem.innerHTML += `<p>${termek.nev} - ${termek.ar} Ft</p>`;
-        });
-        this.#szuloElem.innerHTML += `<h3>Összesen: ${this.getOsszeg()} Ft</h3>`;
+        this.#szuloElem.innerHTML = "<h1>Kosár</h1>";
+        if (this.#lista.length === 0) {
+            this.#szuloElem.innerHTML += "<p>A kosár üres.</p>";
+        } else {
+            this.#lista.forEach(elem => {
+                elem.megjelenit();
+            });
+            
+            const vegosszeg = this.getOsszeg();
+            this.#szuloElem.insertAdjacentHTML("beforeend", `
+                <div class="osszesito">
+                    <h3>Összesen: ${vegosszeg} Ft</h3>
+                </div>
+            `);
+        }
     }
 
     getOsszeg() {
-        return this.#lista.reduce((total, t) => total + t.ar, 0);
+        let sum = 0;
+        this.#lista.forEach(elem => {
+            sum += elem.getAr();
+        });
+        return sum;
     }
 }
