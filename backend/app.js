@@ -13,7 +13,7 @@ app.use(express.static(path.join(__dirname, "../frontend")));
 app.use("/api/termekek", termekRoutes);
 
 app.get("/", (req, res) => {
-    res.sendFile(path.join(__dirname, "../frontend/index.html"));
+    res.sendFile(path.join(__dirname, "../index.html"));
 });
 
 app.listen(3000, () => {
